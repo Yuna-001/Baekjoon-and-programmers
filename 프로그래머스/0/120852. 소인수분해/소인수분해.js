@@ -10,19 +10,12 @@ function solution(n) {
 }
 
 function isPrime(num) {
-    let isPrime;
-    if (num === 2){
-        isPrime=true;
-    } else {
-        for (let i =2; i<num; i++){
-            if (num % i ==0){
-                isPrime=false;
-                break;
-            }
-            else{
-                isPrime=true;
-            }
+    if (num === 2) return true;
+    for (let i =2; i<num; i++){
+        if (num % i ==0){
+            return false;
+            break;
         }
     }
-    return isPrime;
+    return true;
 }
