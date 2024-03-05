@@ -3,6 +3,7 @@ function solution(polynomial) {
     let x0 = 0;
     let result = "";
     const arr = polynomial.split(" + ");
+    
     for(let i=0; i<arr.length; i++){
         if (arr[i].at(-1) === "x"){
             x1 +=  arr[i].length === 1 ? 1 : +arr[i].slice(0,-1);
