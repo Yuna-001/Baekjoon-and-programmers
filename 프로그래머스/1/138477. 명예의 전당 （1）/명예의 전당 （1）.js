@@ -1,31 +1,11 @@
-function solution(k, scores) {
-    const ranking = [];
-    const result = [];
-    let last;
-    
-    scores.forEach((score,index) => {
-        if(index < k){
-            ranking.push(score);
-            if(index > 0){
-                for(let i=index; i>0; i--){
-                    if(score > ranking[i-1]){
-                        [ranking[i],ranking[i-1]] = [ranking[i-1],ranking[i]];
-                    }
-                }
-            }
+function solution(k, score) {
+    const result = new Array(score.length);
+    for (let i=0; i< score.length; i++){
+        if(i<k){
+            result[i] = Math.min(...score.slice(0,i+1));
         }else{
-            if (score > last){
-                ranking[k-1] = score;
-                for(let i=k-1; i>0; i--){
-                    if(score > ranking[i-1]){
-                        [ranking[i],ranking[i-1]] = [ranking[i-1],ranking[i]];
-                    }
-                }
-            }
-        } 
-        last = ranking.at(-1);
-        result.push(last);
-    })
-    
+            result[i]=score.slice(0,i+1).sort((a,b)=>b-a)[k-1];
+        }
+    }      
     return result;
 }
