@@ -1,13 +1,12 @@
 function solution(brown, yellow) {
     const total = brown + yellow;
-    let [x,y] = [3,3];
+    const sqrt = Math.sqrt(total);
+    let x = 3;
     
-    while(true){
+    for(let y=3; y<=sqrt; y++){
         if(total%y===0){
             x = total/y;
-            if(x+y===brown/2+2) return [x,y];
+            if(x+y===(brown+4)/2) return [x,y];
         }
-        
-        y++;
     }
 }
