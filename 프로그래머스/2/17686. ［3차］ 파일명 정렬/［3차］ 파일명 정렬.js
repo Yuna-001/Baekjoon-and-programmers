@@ -1,5 +1,5 @@
 function solution(files) {
-    const reg = /([^\d]+)(\d+)/;
+    const reg = /(\D+)(\d+)/;
     const objArr = files.map(file => {
         let [, head, number] = file.match(reg);
         head = head.toLowerCase();
