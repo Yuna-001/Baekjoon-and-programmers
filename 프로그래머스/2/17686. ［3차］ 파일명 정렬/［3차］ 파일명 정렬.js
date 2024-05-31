@@ -1,13 +1,13 @@
 function solution(files) {
+    const reg = /([^\d]+)(\d+)/
     return files.sort((a,b)=>{
-        const headA = a.split(/\d+/)[0].toLowerCase();
-        const headB = b.split(/\d+/)[0].toLowerCase();
+        let [,headA,numberA] = a.match(reg);
+        let [,headB,numberB] = b.match(reg);
+        
+        headA = headA.toLowerCase();
+        headB = headB.toLowerCase();
         
         if(headA !== headB) return headA > headB ? 1 : -1;
-        
-        const numberA = +a.match(/\d+/)[0];
-        const numberB = +b.match(/\d+/)[0];
-        
-        return numberA - numberB
+        return +numberA - +numberB
     });
 }
