@@ -1,13 +1,22 @@
 function solution(record) {
     const result = [];
     const userNickname = {};
-    const recordArr = record.map(input => {
+    const action = []; 
+    
+    record.forEach(input => {
         const [state, id, nickname] = input.split(" ");
-        if(state !== "Leave") userNickname[id] = nickname;
-        return {state, id, nickname};
+        
+        if(state !== "Leave"){
+            userNickname[id] = nickname;
+        }
+        
+        if(state !== "Change"){
+            action.push({state, id});
+        }
+        
     })
     
-    recordArr.forEach(({state, id}) => {
+    record.forEach(({state, id}) => {
         if(state === "Enter"){
             result.push(userNickname[id]+"님이 들어왔습니다.");
         }else if (state === "Leave"){
@@ -15,5 +24,11 @@ function solution(record) {
         }
     })
     
-    return result;
+    return action.map(({state, id}) => {
+        if(state === "Enter"){
+            return userNickname[id]+"님이 들어왔습니다.";
+        }else if (state === "Leave"){
+            return userNickname[id]+"님이 나갔습니다.";
+        }
+    });
 }
