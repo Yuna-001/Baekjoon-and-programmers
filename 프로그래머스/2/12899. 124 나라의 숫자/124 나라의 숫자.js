@@ -1,11 +1,10 @@
 function solution(n) {
-    const nums = [1,2,4];
-    const rests = [];
+    let result = "";
     
     while(n > 0){
-        rests.push((n-1)%3);
+        result = [1,2,4][(n-1)%3] + result;
         n = Math.floor((n-1)/3);
     }
     
-    return rests.reduce((acc,cur)=>nums[cur]+acc,"");
+    return result;
 }
