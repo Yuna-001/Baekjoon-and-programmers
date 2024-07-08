@@ -7,9 +7,5 @@ function solution(arr1, arr2) {
         size2 = arr2.reduce((acc,cur)=>acc+cur,0);
     }
     
-    if(size1 > size2) return 1;
-    
-    if(size2 > size1) return -1;
-    
-    return 0;
+    return size1 > size2 ? 1 : size1 < size2 ? -1 : 0;
 }
