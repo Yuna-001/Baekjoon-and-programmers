@@ -16,20 +16,10 @@ function solution(a, b) {
         }
     }
     
-    while(arrA.length){
-        const n = carry + +arrA.pop();
-        
-        if(n >= 10){
-            carry = 1;
-            result = n - 10 + result;
-        }else{
-            carry = 0;
-            result = n + result;
-        }
-    }
+    const rest = arrA.length ? arrA : arrB;
     
-    while(arrB.length){
-        const n = carry + +arrB.pop();
+    while(rest.length){
+        const n = carry + +rest.pop();
         
         if(n >= 10){
             carry = 1;
