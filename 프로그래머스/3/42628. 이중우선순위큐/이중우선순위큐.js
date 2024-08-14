@@ -7,7 +7,9 @@ function solution(operations) {
         
         if(str === "I"){
             queue.push(num);
-            sorting(queue);
+            for(let i=queue.length-1; i>0 && queue[i] < queue[i-1]; i--){
+                [queue[i],queue[i-1]] =  [queue[i-1],queue[i]]
+            }
         }else if (num === -1){
             queue.shift();
         }else {
@@ -16,13 +18,4 @@ function solution(operations) {
     }
     
     return queue.length ? [Math.max(...queue),Math.min(...queue)] : [0,0];
-}
-
-function sorting(arr){
-    const value = arr.at(-1);
-    let idx = arr.length-2;
-    for(; idx>=0 && arr[idx] > value; idx--){
-        arr[idx+1] = arr[idx];
-    }
-    arr[idx+1] = value;
 }
