@@ -13,6 +13,6 @@ function solution(a, b, c, d) {
                  return (10 * n2 + n1)**2;
         case 3 : const [[q],[r]] = [...map].filter(([n,count])=>count === 1);
                  return q * r;
-        case 4 : return Math.min(...map.keys());
+        case 4 : return Math.min(a,b,c,d);
     }
 }
