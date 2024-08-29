@@ -1,7 +1,3 @@
 function solution(n) {
-    const result = [];
-    for (let i=1; i<=n; i+=2){
-        result.push(i);
-    }
-    return result;
+    return Array.from({length:Math.ceil(n/2)},(_,i)=>2*i+1);
 }
