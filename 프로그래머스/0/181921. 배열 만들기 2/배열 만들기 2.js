@@ -1,16 +1,11 @@
 function solution(l, r) {
     const result = [];
     
-    function makeNum(len,numStr){
-        if(+numStr > r) return;
-        
-        if(+numStr >= l) result.push(+numStr);
-        
-        if(numStr) makeNum(len+1,numStr+"0");
-        makeNum(len+1,numStr+"5");
+    for(let i=1;;i++){
+        const num = Number(i.toString(2))*5;
+        if(num > r) break;
+        if(num >= l) result.push(num); 
     }
     
-    makeNum(0,"");
-    
-    return result.length ? result.sort((a,b)=> a-b) : [-1];
+    return result.length ? result : [-1];
 }
