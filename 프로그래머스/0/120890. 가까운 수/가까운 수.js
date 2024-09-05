@@ -1,3 +1,16 @@
 function solution(array, n) {
-    return array.map(el => [el,Math.abs(el-n)]).sort((a,b) =>a[1]===b[1]? a[0]-b[0] : a[1]-b[1])[0][0]
+    let result;
+    let minGap = Infinity;
+    
+    array.forEach(el => {
+        const gap = Math.abs(el-n);
+        if(gap < minGap){
+            minGap = gap;
+            result = el;
+        }else if(gap === minGap){
+            result = Math.min(result,el);
+        }
+    })
+    
+    return result;
 }
