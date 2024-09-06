@@ -1,9 +1,11 @@
 function solution(x) {
-    let n = 0;
+    let sum = 0;
+    let n = x;
     
-    for(const c of x.toString()){
-        n += +c;
+    while(n > 0){
+        sum += n % 10;
+        n = Math.floor(n/10);
     }
     
-    return Boolean(x%n===0);
+    return Boolean(x%sum===0);
 }
