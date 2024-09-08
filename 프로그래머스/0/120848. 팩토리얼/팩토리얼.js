@@ -1,13 +1,8 @@
-function solution(n) { 
-    for (let i=2; i<=11; i++){
-        if(factorial(i) > n){
-            return i-1;
-        }
-    }
+function solution(n) {
+    let result = 1;
     
-    return 1;
-}
-
-function factorial(n){
-    return n===1? 1 : n*factorial(n-1);
+    for(let i=2;;i++){
+        result *= i;
+        if(result > n) return i-1;
+    }
 }
