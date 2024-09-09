@@ -1,9 +1,3 @@
 function solution(spell, dic) {
-    for(let str of dic){
-        if(str.length === spell.length && spell.every(c => str.includes(c))){
-            return 1;
-        }
-    }
-    
-    return 2;
+    return dic.some(str => str.length === spell.length && spell.every(c => str.includes(c))) ? 1 : 2;
 }
