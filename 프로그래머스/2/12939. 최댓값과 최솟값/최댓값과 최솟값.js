@@ -1,4 +1,12 @@
 function solution(s) {
-    const arr = s.split(" ").map(n => +n).sort((a,b) => a-b);
-    return arr[0] + " " + arr.at(-1);
+    let min = Infinity;
+    let max = -Infinity;
+    
+    s.split(" ").forEach(c => {
+        const n = Number(c);
+        if(n > max) max = n;
+        if(n < min) min = n;
+    })
+    
+    return min + " " + max;
 }
