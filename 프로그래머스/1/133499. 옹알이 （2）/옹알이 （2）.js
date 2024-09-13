@@ -1,8 +1,7 @@
 function solution(babbling) {
-    return babbling.filter((word)=>{
-        for(const str of ["aya", "ye", "woo", "ma"]){
-            if(word.includes(str+str)) return false;
-        }
-        return word.replace(/aya|ye|woo|ma/g,"") === ""
-    }).length;
+    const reg1 = new RegExp("^(aya|ye|woo|ma)+$");
+    const reg2 = new RegExp("ayaaya|yeye|woowoo|mama");
+    
+    return babbling.reduce((acc,str)=> (reg1.test(str) && !reg2.test(str)) ? acc+1 : acc,0);
+    
 }
