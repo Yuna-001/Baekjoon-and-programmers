@@ -1,4 +1,3 @@
 function solution(numbers) {
-    return numbers.reduce((total,number)=>total+=number,0)/numbers.length;
-    
+    return numbers.reduce((acc,cur)=>acc+cur,0)/numbers.length
 }
