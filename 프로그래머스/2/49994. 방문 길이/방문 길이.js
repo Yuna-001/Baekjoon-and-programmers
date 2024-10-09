@@ -1,41 +1,28 @@
+const findEndPosition = (direction,row,col)=>{
+    switch (direction){
+        case "U": return [row+1,col];
+        case "D": return [row-1,col];
+        case "R": return [row,col+1];
+        case "L": return [row,col-1];
+    }
+}
+
+const isValidMove = (position)=>{
+    return position[0] >= 0 && position[0] <= 10 && position[1] >= 0 && position[1] <= 10; 
+}
+
 function solution(dirs) {
-    const obj = {};
-    let count = 0;
-    let position = [0,0];
+    const visited = new Set();
+    let now = [5,5];
     
-    for(const dir of dirs){
-        
-        const current = position.toString();
-        
-        if(dir === "U"){
-            if(position[1] === 5) continue;
-            position[1]++;
-        }else if(dir === "D"){
-            if(position[1] === -5) continue;
-            position[1]--;
-        }else if(dir === "R"){
-            if(position[0] === 5) continue;
-            position[0]++;
-        }else if(dir === "L"){
-            if(position[0] === -5) continue;
-            position[0]--;
-        }
-        
-        const next = position.toString();
-        
-        if(!obj[current]){
-            obj[current] = [];
-        }
-        
-        if(!obj[next]){
-            obj[next] = [];
-        }
-        
-        if(!obj[current].includes(next) && !obj[next].includes(current)){
-            obj[current].push(next);
-            count++;
+    for(const direction of dirs){
+        const end = findEndPosition(direction,now[0],now[1]);
+        if(isValidMove(end)){
+            visited.add(`${now} ${end}`);
+            visited.add(`${end} ${now}`);
+            now = end;
         }
     }
     
-    return count;
+    return visited.size/2;
 }
