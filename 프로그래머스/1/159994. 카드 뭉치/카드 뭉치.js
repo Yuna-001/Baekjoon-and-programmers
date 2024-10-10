@@ -2,7 +2,6 @@ function solution(cards1, cards2, goal) {
     let idx1 = 0;
     let idx2 = 0;
     let goalIdx = 0;
-    let isPossible = true;
     
     while(goalIdx < goal.length){
        if(cards1[idx1] === goal[goalIdx]){
@@ -12,10 +11,9 @@ function solution(cards1, cards2, goal) {
            idx2++;
            goalIdx++;
        }else{
-           isPossible =false;
-           break;
+           return "No";
        }
     }
     
-    return isPossible ? "Yes" : "No";
+    return "Yes";
 }
