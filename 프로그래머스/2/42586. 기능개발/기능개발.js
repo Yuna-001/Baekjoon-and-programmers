@@ -1,19 +1,19 @@
+
 function solution(progresses, speeds) {
+    const days = Array.from({length: speeds.length}, (_,i) => Math.ceil((100-progresses[i])/speeds[i]));
     const result = [];
     let count = 1;
-    let max = Math.ceil((100 - progresses[0])/speeds[0]);
+    let maxDay = days[0];
     
-    for(let i=1; i<progresses.length; i++,count++){
-        const day = Math.ceil((100 - progresses[i])/speeds[i]);
-        
-        if(day > max) {
+    for(let i=1; i<=days.length; i++){
+        if(days[i] <= maxDay){
+            count++;
+        } else{
             result.push(count);
-            max = day;
-            count = 0;
-        }
+            maxDay = days[i];
+            count = 1;
+        } 
     }
-    
-    result.push(count);
     
     return result;
 }
