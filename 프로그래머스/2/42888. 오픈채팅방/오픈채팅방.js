@@ -1,34 +1,24 @@
 function solution(record) {
+    const nicknameObj = {};
     const result = [];
-    const userNickname = {};
-    const action = []; 
     
-    record.forEach(input => {
-        const [state, id, nickname] = input.split(" ");
+    for(const str of record){
+        const [op, id, nickname] = str.split(" ");
         
-        if(state !== "Leave"){
-            userNickname[id] = nickname;
+        if(op === "Enter" || op === "Change"){
+            nicknameObj[id] = nickname;
         }
-        
-        if(state !== "Change"){
-            action.push({state, id});
-        }
-        
-    })
+    }
     
-    record.forEach(({state, id}) => {
-        if(state === "Enter"){
-            result.push(userNickname[id]+"님이 들어왔습니다.");
-        }else if (state === "Leave"){
-            result.push(userNickname[id]+"님이 나갔습니다.");
+    for(const str of record){
+         const [op, id] = str.split(" ");
+        
+        if(op === "Enter"){
+            result.push(`${nicknameObj[id]}님이 들어왔습니다.`);
+        }else if (op === "Leave"){
+            result.push(`${nicknameObj[id]}님이 나갔습니다.`);
         }
-    })
+    }
     
-    return action.map(({state, id}) => {
-        if(state === "Enter"){
-            return userNickname[id]+"님이 들어왔습니다.";
-        }else if (state === "Leave"){
-            return userNickname[id]+"님이 나갔습니다.";
-        }
-    });
+    return result;
 }
