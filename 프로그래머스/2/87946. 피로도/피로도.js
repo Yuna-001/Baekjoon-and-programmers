@@ -15,8 +15,6 @@ function solution(k, dungeons) {
                 visited[i] = false;
             }
         }
-        
-        return;
     }
     
     explore(k,0);
