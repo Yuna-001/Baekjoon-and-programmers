@@ -1,18 +1,19 @@
 function solution(triangle) {
-    const dp = Array.from({length:triangle.length},()=>[]);
+    const length = triangle.length
+    const dp = Array.from({length}, () => new Array());
+    dp[0][0] = triangle[0][0];
     
-    function findMaxSum(row,col){
-        if(row===triangle.length-1) return triangle[row][col];
-        
-        if(dp[row][col] !== undefined) return dp[row][col];
-        
-        const sum1 = findMaxSum(row+1,col) + triangle[row][col];
-        const sum2 = findMaxSum(row+1,col+1) + triangle[row][col];
-        
-        dp[row][col] = sum1 > sum2 ? sum1 : sum2;
-        
-        return dp[row][col];
+    for(let i=1; i<length; i++){
+        for(let j=0; j<triangle[i].length; j++){
+            if(j === 0){
+                dp[i][j] = triangle[i][j] + dp[i-1][j];
+            } else if(j === triangle[i].length -1){
+                dp[i][j] = triangle[i][j] + dp[i-1][j-1];
+            } else{
+                dp[i][j] = triangle[i][j] + Math.max(dp[i-1][j], dp[i-1][j-1]);
+            }
+        }
     }
     
-    return findMaxSum(0,0);
+    return Math.max(...dp[length-1]);
 }
