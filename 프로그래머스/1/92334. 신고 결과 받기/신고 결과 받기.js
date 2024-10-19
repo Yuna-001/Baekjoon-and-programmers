@@ -1,25 +1,23 @@
 function solution(id_list, report, k) {
-    const reportSet = new Set(report);
-    const reportObj = {};
-    const countObj = {};
+    const reportedUsers = {};
     
-    for(const id of id_list){
-        reportObj[id] = [];
-        countObj[id] = 0; 
+    for(const arr of report){
+        const [reporting,reported] = arr.split(" ");
+        
+        if(!reportedUsers[reported]) reportedUsers[reported] = new Set();
+        reportedUsers[reported].add(reporting);
     }
     
-    for(const str of reportSet){
-        const [a,b] = str.split(" ");
-        reportObj[b].push(a);
-    }
+    const mail = {};
+    const stop = {};
     
-    for(const key in reportObj){
-        if(reportObj[key].length >= k){
-            for(const id of reportObj[key]){
-                countObj[id]++;
-            }
+    for(const reported in reportedUsers){
+        if(reportedUsers[reported].size < k) continue;
+            
+        for(const reporting of [...reportedUsers[reported]]){
+            mail[reporting] = (mail[reporting] || 0) + 1;
         }
     }
     
-    return id_list.map(id => countObj[id]);
+    return id_list.map(id => mail[id] ? mail[id] : 0);
 }
