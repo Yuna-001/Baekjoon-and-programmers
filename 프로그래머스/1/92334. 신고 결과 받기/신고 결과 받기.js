@@ -9,12 +9,11 @@ function solution(id_list, report, k) {
     }
     
     const mail = {};
-    const stop = {};
     
     for(const reported in reportedUsers){
         if(reportedUsers[reported].size < k) continue;
             
-        for(const reporting of [...reportedUsers[reported]]){
+        for(const reporting of reportedUsers[reported]){
             mail[reporting] = (mail[reporting] || 0) + 1;
         }
     }
