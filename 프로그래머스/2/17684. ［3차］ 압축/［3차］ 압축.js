@@ -1,26 +1,25 @@
 function solution(msg) {
-    const dict = {length : 0};
-    const answer = [];
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const dict = {};
+    let lastIndex = alphabet.length;
     
-    [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].forEach(x => dict[x] = ++dict.length);
-    
-    for(let i=0; i<msg.length; i++){
-        let idx = dict[msg[i]];
-        let wordLength = 0;
-        for(let j=i+2; j<=msg.length; j++){
-            const word = msg.slice(i,j);
-            const newIdx = dict[word];
-            if(newIdx){
-                idx = newIdx;
-                wordLength++;
-            }else{
-                dict[word] = ++dict.length;
-                break;
-            }
-        }
-        i += wordLength;
-        answer.push(idx);
+    for(let i=0; i<alphabet.length; i++){
+        dict[alphabet[i]] = i+1;
     }
     
-    return answer;
+    const result = [];
+    
+    for(let i=0,str=""; i<msg.length; i++,str=""){
+        str = msg[i];
+        
+        while(i < msg.length -1 && dict[str + msg[i+1]]){
+            str += msg[++i];
+        }
+        
+        result.push(dict[str]);
+        
+        if(i < msg.length -1) dict[str + msg[i+1]] = ++lastIndex;
+    }
+    
+    return result;
 }
