@@ -1,3 +1,9 @@
 function solution(array, height) {
-    return array.reduce((total,cur)=>total + Number(cur > height),0);
+    let result = 0;
+    
+    array.forEach(n => {
+        if(n > height) result++;
+    })
+    
+    return result;
 }
