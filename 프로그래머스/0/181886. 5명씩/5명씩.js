@@ -1,3 +1,9 @@
 function solution(names) {
-    return names.filter((_,i)=>i%5===0);
+   const result = []
+   
+   for(let i=0; i<names.length; i+=5){
+       result.push(names[i]);
+   }
+   
+   return result;
 }
