@@ -1,5 +1,6 @@
 function solution(n) {
     let answer = [];
+    
     for(let i=2; i <= n; i++){
         if(n%i===0 && isPrime(i)){
             answer.push(i);
@@ -11,10 +12,12 @@ function solution(n) {
 
 function isPrime(num) {
     if (num === 2) return true;
-    for (let i =2; i<num; i++){
+    
+    const sqrt = Math.sqrt(num);
+    
+    for (let i =2; i<=sqrt; i++){
         if (num % i ==0){
             return false;
-            break;
         }
     }
     return true;
