@@ -45,11 +45,11 @@ function solution(nodeinfo) {
     const result = [[],[]];
     const tree = new Tree();
     
-    nodeinfo = nodeinfo.map(([x,y],idx) => ({x,y,idx: idx+1}));
-    nodeinfo.sort((a,b)=>b.y-a.y);
+    const idxArr = nodeinfo.map((_,idx) => idx+1);
+    idxArr.sort((a,b)=> nodeinfo[b-1][1] - nodeinfo[a-1][1] || nodeinfo[a-1][0] - nodeinfo[b-1][0]);
     
-    nodeinfo.forEach(({x,idx}) => {
-        tree.push(idx,x);
+    idxArr.forEach(idx => {
+        tree.push(idx,nodeinfo[idx-1][0]);
     })
     
     function preOrder(node){
