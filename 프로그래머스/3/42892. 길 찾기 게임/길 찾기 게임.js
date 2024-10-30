@@ -52,21 +52,31 @@ function solution(nodeinfo) {
         tree.push(idx,nodeinfo[idx-1][0]);
     })
     
-    function preOrder(node){
-        result[0].push(node.idx);
-        if(node.left) preOrder(node.left);
-        if(node.right) preOrder(node.right);
-    }
-
-    preOrder(tree.root);
+    // 전위순회
+    let stack = [tree.root];
     
-    function postOrder(node){
-        if(node.left) postOrder(node.left);
-        if(node.right) postOrder(node.right);
-        result[1].push(node.idx);
+    while(stack.length){
+        const {idx,left,right} = stack.pop();
+        
+        result[0].push(idx);
+        if(right) stack.push(right);
+        if(left) stack.push(left);
     }
     
-    postOrder(tree.root);
+    // 후위순회
+    stack = [[tree.root,false]];
     
-    return result
+    while(stack.length){
+        const [node,visited] = stack.pop();
+        
+        if(visited){
+            result[1].push(node.idx);
+        }else{
+            stack.push([node,true])
+            if(node.right) stack.push([node.right,false]);
+            if(node.left) stack.push([node.left,false]);   
+        }
+    }
+    
+    return result;
 }
