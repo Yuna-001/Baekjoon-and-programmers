@@ -1,12 +1,13 @@
 function solution(n, words) {
-    const set = new Set();
-    let endChar = words[0][0];
+    const set = new Set([words[0]]);
     
-    for(let i=0;i<words.length; i++){
-        if(endChar !== words[i][0] || set.has(words[i])) return [i%n+1, Math.ceil((i+1)/n)];
-        endChar = words[i].at(-1);
+    for(let i=1; i<words.length; i++){
+        if(words[i][0] !== words[i-1].at(-1) || set.has(words[i])){
+            return [i%n+1, Math.floor(i/n)+1];
+        }
+        
         set.add(words[i]);
     }
     
-    return [0,0]
+    return [0,0];
 }
