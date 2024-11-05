@@ -1,21 +1,19 @@
 function solution(n, computers) {
-    const visited = {};
     let network = 0;
+    const checked = [];
     
-    function dfs(start){
-        if(visited[start]) return;
-        
-        visited[start] = true;
-        
-        for(let end=0; end<n; end++){
-            if(computers[start][end]){
-                dfs(end);
+    function dfs(computer){
+        for(let i=0; i<n; i++){
+            if(!checked[i] && computers[computer][i]){
+                checked[i] = true;
+                dfs(i);
             }
         }
     }
     
     for(let i=0; i<n; i++){
-        if(!visited[i]){
+        if(!checked[i]){
+            checked[i] = true;
             dfs(i);
             network++;
         }
