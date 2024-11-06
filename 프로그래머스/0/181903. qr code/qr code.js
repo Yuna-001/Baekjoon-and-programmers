@@ -1,9 +1,3 @@
 function solution(q, r, code) {
-    let str = "";
-    
-    for(let i=r; i<code.length; i+=q){
-        str += code[i];
-    }
-    
-    return str;
+    return [...code].reduce((acc,cur,i)=>i%q===r ? acc+cur : acc,"")
 }
