@@ -9,11 +9,11 @@ function solution(N, road, K) {
     const distances = Array.from({length:N+1},()=>Infinity);
     distances[1] = 0;
     
-    const queue = new Queue();
+    const queue = [];
     queue.push([1,0]);
     
-    while(!queue.isEmpty()){
-        const [curTown, curDistance] = queue.pop();
+    while(queue.length){
+        const [curTown, curDistance] = queue.shift();
         
         if(distances[curTown] < curDistance) continue;
         
@@ -27,26 +27,4 @@ function solution(N, road, K) {
     }
     
     return distances.filter(distance => distance <= K).length;
-}
-
-class Queue{
-    constructor(){
-        this.items = [];
-    }
-    
-    isEmpty(){
-        return this.items.length === 0;
-    }
-    
-    push(val){
-        this.items.push(val);
-    }
-    
-    pop(){
-        return this.items.shift()
-    }
-    
-    sort(){
-        this.items.sort((a,b)=>a[1]-b[1]);
-    }
 }
