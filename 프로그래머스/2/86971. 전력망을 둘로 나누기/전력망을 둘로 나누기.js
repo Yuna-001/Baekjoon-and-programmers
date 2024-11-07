@@ -1,26 +1,30 @@
-function solution(n, wires) {
-    const links = Array.from({length : n+1},()=> new Array());
-    const differences = [];
+function solution(n, wires){
+    const graph = Array.from({length: n+1}, ()=>[]);
+    let answer = n;
     
-    for (const [v1,v2] of wires){
-        links[v1].push(v2);
-        links[v2].push(v1);
-    }
+    wires.forEach(([v1,v2])=>{
+        graph[v1].push(v2);
+        graph[v2].push(v1);
+    })
     
-    function findFamilyNumber(num,prev){
+    const visited = [];
+    
+    function dfs(node){
         let count = 1;
         
-        for(const v of links[num]){
-            if(v !== prev){
-                count += findFamilyNumber(v,num);
+        for(const neighbor of graph[node]){
+            if(!visited[neighbor]){
+                visited[neighbor] = true;
+                count += dfs(neighbor);
             }
         }
         
-        differences.push(Math.abs(n-2*count));
+        answer = Math.min(answer, Math.abs(n-2*count));
         return count;
     }
     
-    findFamilyNumber(1)
+    visited[1] = true;
+    dfs(1);
     
-    return Math.min(...differences);
+    return answer;
 }
