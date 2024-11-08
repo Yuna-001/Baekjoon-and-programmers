@@ -1,23 +1,22 @@
 function solution(k, dungeons) {
+    const visited = [];
     let max = 0;
-    const visited = {};
     
     function explore(hp,count){
-        if(count > max){
-            max = count;
-        }
+        max = Math.max(max, count);
         
         for(let i=0; i<dungeons.length; i++){
-            const [minimum,spend] = dungeons[i];
-            if(!visited[i] && hp >= minimum){
+            const [min,spend] = dungeons[i];
+            if(!visited[i] && hp >= min){
                 visited[i] = true;
                 explore(hp-spend,count+1);
                 visited[i] = false;
             }
         }
+        
     }
     
-    explore(k,0);
+    explore(k,0,0);
     
     return max;
 }
