@@ -1,10 +1,5 @@
 function solution(numbers) {
-    numbers.sort((a,b) => {
-        const strA = String(a);
-        const strB = String(b);
-        
-        return strA + strB >= strB + strA ? -1 : 1;
-    })
+    const answer = numbers.map(n => String(n)).sort((a,b)=>Number(b+a)-Number(a+b)).join("");
     
-    return numbers[0] === 0 ? "0" : numbers.join("");
+    return Number(answer) === 0 ? "0" : answer;
 }
