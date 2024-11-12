@@ -1,21 +1,32 @@
-function solution(toppings) {
-    let result = 0;
-    const p1 = new Map();
-    const p2 = new Map();
+function solution(topping) {
+    let count = 0;
+    const p2ToppingCounts = new Map();
     
-    toppings.forEach(topping => p2.set(topping, (p2.get(topping) || 0 ) +1));
-    
-    for (let i=0; i<toppings.length-1 && p1.size <= p2.size; i++){
-        p1.set(toppings[i], (p1.get(toppings[i]) || 0 ) +1);
-        
-        if (p2.get(toppings[i]) === 1) {
-            p2.delete(toppings[i]);
-        } else {
-            p2.set(toppings[i], p2.get(toppings[i]) - 1);
-        }
-        
-        if(p1.size === p2.size) result++;
+    for(const type of topping){
+        p2ToppingCounts.set(type, (p2ToppingCounts.get(type) || 0) + 1);
     }
     
-    return result;
+    const p1ToppingTypes = new Set();
+    
+    for(const type of topping){
+        p1ToppingTypes.add(type);
+        
+        if(p2ToppingCounts.has(type)){
+            p2ToppingCounts.set(type, (p2ToppingCounts.get(type) || 0) - 1);
+        }
+        
+        if(p2ToppingCounts.get(type) === 0){
+            p2ToppingCounts.delete(type);
+        }
+        
+        if(p1ToppingTypes.size === p2ToppingCounts.size){
+            count++;
+        }else if(p1ToppingTypes.size > p2ToppingCounts.size){
+            break;
+        }
+        
+    }
+    
+    return count;
+    
 }
