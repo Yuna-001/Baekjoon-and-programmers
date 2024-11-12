@@ -1,13 +1,17 @@
 function solution(s) {
-    let zeros = 0;
-    let count = 0;
+    let countTransform = 0;
+    let countZero = 0;
     
     while(s !== "1"){
-        let c = [...s].filter(v => v==="1").length;
-        zeros += s.length - c;
-        s = c.toString(2);
-        count++;
+        const arr = s.split("");
+        const prevLength = arr.length;
+        const countOne = arr.filter(n => n === "1").length;
+        
+        countZero += prevLength - countOne;
+        countTransform++;
+        
+        s = countOne.toString(2);
     }
     
-    return [count,zeros];
+    return [countTransform, countZero]
 }
