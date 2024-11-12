@@ -3,9 +3,8 @@ function solution(s) {
     let countZero = 0;
     
     while(s !== "1"){
-        const arr = s.split("");
-        const prevLength = arr.length;
-        const countOne = arr.filter(n => n === "1").length;
+        const prevLength = s.length;
+        const countOne = s.split("0").join("").length;
         
         countZero += prevLength - countOne;
         countTransform++;
