@@ -1,18 +1,23 @@
 function solution(n, stations, w) {
-    let result = 0;
+    const noWaves = [];
     
-    let start = 1; 
-    let end;
-    
+    let building = 1;
     for(const station of stations){
-        end = station - w -1;
-        if(start <= end){
-            result += Math.ceil((end-start+1)/(2*w+1));
+        if(building < station - w){
+            noWaves.push([building, station-w-1]);
         }
-        start = station + w + 1;
+        building = station + w + 1;
     }
     
-    if(start <= n) result += Math.ceil((n-start+1)/(2*w+1));
+    if(building <= n){
+        noWaves.push([building,n])
+    }
     
-    return result;
+    let count = 0;
+    
+    for(const [start, end] of noWaves){
+        count += Math.ceil((end - start + 1) / (2*w+1));
+    }
+    
+    return count;
 }
