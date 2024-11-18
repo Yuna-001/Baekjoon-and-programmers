@@ -1,6 +1,5 @@
 function solution(n, costs) {
     const roots = Array.from({length:n},(_,i)=>i);
-    const childrenCount = Array.from({length:n},(_,i)=>i);
     costs.sort((a,b)=>a[2]-b[2]);
     
     let result = 0;
@@ -24,8 +23,4 @@ function find(parents,x){
     parents[x] = find(parents,parents[x]);
     
     return parents[x];
-}
-
-function union(parents,x,y){
-    
 }
