@@ -1,33 +1,35 @@
 function solution(n, edge) {
-    let result = {max : 0, count : 0};
-    
-    const connection = {};
-    
+    const graph = Array.from({length: n+1},()=> []);
+   
     for(const [v1,v2] of edge){
-        if(!connection[v1]) connection[v1] = [];
-        if(!connection[v2]) connection[v2] = [];
-        connection[v1].push(v2);
-        connection[v2].push(v1);
+        graph[v1].push(v2);
+        graph[v2].push(v1);
     }
+   
+    const distances = new Array(n+1).fill(Infinity);
+    const visited = [];
+
+    const queue = [[1,0]];
+    visited[1] = true;
     
-    const queue = [{vertex : 1, distance : 0}];
-    const visited = { 1 : true };
+    let maxDistance = -1;
     
     while(queue.length){
-        const {vertex, distance} = queue.shift();
+        const [v,distance] = queue.shift();
         
-        if(distance > result.max){
-            result.max = distance;
-            result.count = 1;
-        }else if(distance === result.max){
-            result.count++;
+        distances[v] = distance;
+        
+        if(distance > maxDistance){
+            maxDistance = distance;
         }
         
-        for(const v of connection[vertex]){
-            if(!visited[v]) queue.push({vertex : v, distance : distance + 1});
-            visited[v] = true;
+        for(const neighbor of graph[v]){
+            if(!visited[neighbor]){
+                queue.push([neighbor, distance + 1]);
+                visited[neighbor] = true;
+            }
         }
     }
     
-    return result.count;
+    return distances.filter(distance => distance === maxDistance).length;
 }
