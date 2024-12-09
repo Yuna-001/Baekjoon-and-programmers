@@ -1,14 +1,14 @@
-function solution(files) {
-    const reg = /(\D+)(\d+)/;
-    const objArr = files.map(file => {
-        let [, head, number] = file.match(reg);
-        head = head.toLowerCase();
-        number = +number;
-        return { file , head, number };
-    });
+function solution(files) { 
+    const reg = new RegExp(/(^\D+)|(\d+)/,"g");
     
-    return objArr.sort((a,b)=>{
-        if(a.head !== b.head) return a.head > b.head ? 1 : -1;
-        return a.number - b.number;
-    }).map(x => x.file);
+    return files.sort((a,b)=>{
+        let [headA, numberA] = a.split(".")[0].match(reg);
+        let [headB, numberB] = b.split(".")[0].match(reg);
+        headA = headA.toLowerCase();
+        headB = headB.toLowerCase();
+        
+        if(headA !== headB) return headA.localeCompare(headB);
+        
+        return Number(numberA) - Number(numberB);
+    })
 }
