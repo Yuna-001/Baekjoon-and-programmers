@@ -1,15 +1,5 @@
 function solution(board) {
-    let count = 0;
-    
-    for(let i=0; i<board.length; i++){
-        for(let j=0; j<board[i].length; j++){
-            if(isSafe(i,j,board)){
-                count++;
-            }
-        }
-    }
-    
-    return count;
+    return board.reduce((total,row,i)=>total+row.filter((_,j) => isSafe(i,j,board)).length,0);
 }
 
 function isSafe(row,col,board){
