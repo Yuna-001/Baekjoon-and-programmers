@@ -1,12 +1,11 @@
 function solution(s) {
-    let min = Infinity;
-    let max = -Infinity;
+    const result = [Infinity, -Infinity];
     
-    s.split(" ").forEach(c => {
-        const n = Number(c);
-        if(n > max) max = n;
-        if(n < min) min = n;
+    s.split(" ").forEach(char => {
+        const n = Number(char);
+        if(n < result[0]) result[0] = n;
+        if(n > result[1]) result[1] = n;
     })
     
-    return min + " " + max;
+    return result.join(" ");
 }
