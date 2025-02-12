@@ -16,7 +16,7 @@ function solution(a, b) {
         }
     }
     
-    const rest = arrA.length ? arrA : arrB;
+    const rest = arrA.length > 0 ? arrA : arrB;
     
     while(rest.length){
         const n = carry + +rest.pop();
@@ -30,7 +30,7 @@ function solution(a, b) {
         }
     }
     
-    if(carry) result = carry + result;
+    if(carry === 1) result = carry + result;
     
     return result;
 }
