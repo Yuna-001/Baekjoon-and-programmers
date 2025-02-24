@@ -1,12 +1,25 @@
 function solution(array) {
-    let n, count;
-    let arr = new Array(Math.max(...array)+1).fill(0);
-    array.forEach(v => arr[v]++);
-    count = Math.max(...arr)
-    n = arr.indexOf(count);
-    if (arr.indexOf(count,n+1) === -1){
-        return n;
-    }else{
-        return -1;
+    const count = new Map();
+    
+    array.forEach(n => {
+        count.set(n, (count.get(n) || 0) + 1);
+    });
+    
+    let maxKey = -1; 
+    let maxValue = -1;
+    
+    for(const [key,value] of  [...count]){
+        if(value > maxValue){
+            maxValue = value;
+            maxKey = key;
+        }
     }
+    
+    for(const [key,value] of  [...count]){
+        if(value === maxValue && key !== maxKey){
+            return -1;
+        }
+    }
+    
+   return maxKey;
 }
