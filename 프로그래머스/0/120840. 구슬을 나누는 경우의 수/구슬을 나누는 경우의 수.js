@@ -1,6 +1,4 @@
 function solution(balls, share) {
-    // balls_C_share
-
     let n1 = 1;
     let n2 = 1;
     const choice = Math.min(balls-share,share);
