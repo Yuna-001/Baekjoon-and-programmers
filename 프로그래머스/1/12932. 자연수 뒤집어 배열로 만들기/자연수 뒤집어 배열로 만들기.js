@@ -3,7 +3,7 @@ function solution(n) {
     
     while(n > 0){
         result.push(n%10);
-        n = ~~(n/10);
+        n = parseInt(n/10,10);
     }
     
     return result;
