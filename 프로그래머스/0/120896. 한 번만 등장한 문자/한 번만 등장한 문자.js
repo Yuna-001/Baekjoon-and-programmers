@@ -1,7 +1,7 @@
 function solution(s) {
     const result = [];
     const alphabet = {};
-    const notOne = [];
+    const notOne = {};
     
     for(const c of s){
         if(alphabet[c]) notOne[c]=true;
