@@ -7,6 +7,7 @@ function solution(n) {
             n/=i;
         }
     }
+    
     return answer;    
 }
 
