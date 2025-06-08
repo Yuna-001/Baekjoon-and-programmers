@@ -1,18 +1,24 @@
 function solution(N, stages) {
-    stages.sort((a,b)=>a-b);
+    // 스테이지당 멈춰있는 사용자 수
+    const players = Array.from({length: N+2},()=>0);
+    let totalPlayerCount = stages.length;
+    const failureRates = [];
     
-    const failurePercentArr = Array.from({length:N},(_,i)=>({stage:i+1,failurePercent:0}));
+    stages.forEach(stage => {
+        players[stage] += 1;
+    })
     
-    for(let i=0; i<stages.length && stages[i] <=N; i++){
-        const reach = stages.length - i;
-        const firstIdx = i;
-        while(stages[i+1]===stages[i]) i++;
-        const notCleared = i-firstIdx+1;
-        failurePercentArr[stages[i]-1].failurePercent = notCleared / reach;
+    for(let i=1; i<=N; i++){
+        if(players[i]===0){
+            failureRates[i]=0;
+            continue;
+        }
+        failureRates[i] = players[i]/totalPlayerCount;
+        totalPlayerCount -= players[i];
     }
-
-    failurePercentArr.sort((a,b)=>b.failurePercent - a.failurePercent);
     
-    return failurePercentArr.map(({stage})=>stage);
+    const result = Object.entries(failureRates).sort((a,b)=>b[1]-a[1]);
+    
+    return result.map(([idx]) => +idx)
     
 }
