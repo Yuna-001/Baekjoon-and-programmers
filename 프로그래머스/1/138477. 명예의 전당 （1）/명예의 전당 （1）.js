@@ -1,11 +1,13 @@
 function solution(k, score) {
-    const result = new Array(score.length);
-    for (let i=0; i< score.length; i++){
-        if(i<k){
-            result[i] = Math.min(...score.slice(0,i+1));
-        }else{
-            result[i]=score.slice(0,i+1).sort((a,b)=>b-a)[k-1];
-        }
-    }      
+    const fameArr = [];
+    const result = [];
+    
+    for(let i=0; i<score.length; i++){
+        fameArr.push(score[i]);
+        fameArr.sort((a,b)=>b-a);
+        if(fameArr.length > k) fameArr.pop();
+        result[i] = fameArr.at(-1);
+    }
+    
     return result;
 }
