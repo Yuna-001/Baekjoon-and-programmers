@@ -1,23 +1,23 @@
 function solution(today, terms, privacies) {
-    const result = [];
-    const todayArr = today.split(".").map(n => +n);
+    const answer = [];
     
-    for(let i=0; i<privacies.length; i++){
-        const date = privacies[i].split(" ")[0].split(".").map(n => +n);
-        const month = date[1] + +terms.find(term => term[0]===privacies[i].at(-1)).slice(2);
-        
-        if(month > 12){
-            date[0] += ~~((month-1)/12);
-            date[1] = (month-1) % 12 + 1;
-        } else {
-            date[1] = month;
-        }
-        
-        const a = new Date(...todayArr);
-        const b = new Date(...date);
-        
-        if(a >= b) result.push(i+1);   
-    }
+    const todayNumArr = today.split(".").map(v => +v);
+    const todayTimestamp = 28*12*todayNumArr[0] + 28*todayNumArr[1] + todayNumArr[2];
     
-    return result;
+    const termsMap = new Map();
+    
+    terms.forEach(term => {
+        const [type, period] = term.split(" ");
+        termsMap.set(type,period*28);
+    })
+    
+   privacies.forEach((privacy,idx) => {
+       const [date, type] = privacy.split(" ");
+       const [y,m,d] = date.split(".");
+       
+       const deadlineTimestamp = 28*12*y + 28*m + 1*d + termsMap.get(type);
+       if(deadlineTimestamp <= todayTimestamp) answer.push(idx+1);
+   })
+    
+    return answer.sort((a,b)=>a-b);
 }
