@@ -1,65 +1,40 @@
-function solution(park, routes) {
-    const H = park.length;
-    const W = park[0].length;
-    let x,y;
-    const log =[];
-   
-    for(let row=0; row < H; row++){
-        const col = park[row].indexOf("S");
-        if(col !== -1){
-            y = row;
-            x = col;
-            break;
+function solution(park, routes){
+    const directions = {"N":[-1,0],"S":[1,0],"E":[0,1],"W":[0,-1]};
+    
+    let result;
+
+    for(let y=0; y<park.length; y++){
+        for(let x=0; x<park[y].length; x++){
+            if(park[y][x] === "S"){
+                result = [y,x]
+            }
         }
     }
     
-    for(let route of routes){
-        const [op,n] = route.split(" ");
-        let canGo = true;
-        let next;
+    function isValidPosition(y,x){
+        return y>=0 && x>=0 && y<park.length && x<park[0].length;
+    }
+    
+    for(const route of routes){
+        const [dir, nStr] = route.split(" ");
+        const n = Number(nStr);
         
-        if(op === "E"){
-            next = x + +n
-            if(next >= W) continue;
-            for(let i=x+1; i<=next; i++){
-                if(park[y][i] === "X"){
-                    canGo = false;
-                    break;
-                }
+        let isPossible = true;
+        const currentDirection = directions[dir];
+        
+        for(let i=1; i<=n ;i++){
+            const [currentY, currentX] = result.map((pos,idx)=> pos + i*currentDirection[idx]);
+            
+            if(!isValidPosition(currentY, currentX) || park[currentY][currentX] ==="X"){
+                isPossible = false;
+                break;
             }
-            if(canGo) x = next;
-        }else if(op === "W"){
-            next = x - n
-            if(next < 0) continue;
-            for(let i=x-1; i>=next; i--){
-                if(park[y][i] === "X"){
-                    canGo = false;
-                    break;
-                }
-            }
-            if(canGo) x = next;
-        }else if(op === "N"){
-            next = y - n
-            if(next < 0) continue;
-            for(let i=y-1; i>=next; i--){
-                if(park[i][x] === "X"){
-                    canGo = false;
-                    break;
-                }
-            }
-            if(canGo) y = next;
-        }else if(op === "S"){
-            next = y + +n
-            if(next >= H) continue;
-            for(let i=y+1; i<=next; i++){
-                if(park[i][x] === "X"){
-                    canGo = false;
-                    break;
-                }
-            }
-            if(canGo) y = next;
+        }
+        
+        if(isPossible){
+            result = result.map((pos,idx)=> pos + n*currentDirection[idx])
         }
     }
-    
-    return [y,x];
+
+    return result;
 }
