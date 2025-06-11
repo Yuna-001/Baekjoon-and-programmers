@@ -1,35 +1,34 @@
 function solution(friends, gifts) {
-    const giving = {};
-    const receiving = {};
-    const result = [];
+    const scores = {};
+    const givingLog = {};
+    const giftCounts = {}
     
-    for(const friend of friends){
-        giving[friend] = [];
-        receiving[friend] = [];
-        result.push(0);
-    }
-    
-    for(const gift of gifts){
-        const [p1, p2] = gift.split(" ");
-        giving[p1].push(p2);
-        receiving[p2].push(p1);
-    }
+    friends.forEach(friend => {
+        scores[friend] = 0;
+        giftCounts[friend] = 0;
+        givingLog[friend] = {};
+    })
+
+    gifts.forEach(gift => {
+        const [giver, receiver] = gift.split(" ");
+        
+        scores[giver]++;
+        scores[receiver]--;
+
+        givingLog[giver][receiver] =  (givingLog[giver][receiver] || 0) + 1;
+    })
     
     for(let i=0; i<friends.length; i++){
         for(let j=i+1; j<friends.length; j++){
-            const a = giving[friends[i]].filter(x => x===friends[j]).length;
-            const b = giving[friends[j]].filter(x => x===friends[i]).length;
-            if(a > b) result[i]++;
-            else if (b > a) result[j]++;
-            else {
-                const pointA = giving[friends[i]].length - receiving[friends[i]].length;
-                const pointB = giving[friends[j]].length - receiving[friends[j]].length;
-                if(pointA > pointB) result[i]++;
-                else if(pointB > pointA) result[j]++;
-            }
+            const iCount = givingLog[friends[i]][friends[j]] || 0;
+            const jCount = givingLog[friends[j]][friends[i]] || 0;
+            
+            if(iCount > jCount) giftCounts[friends[i]]++;
+            else if(iCount < jCount) giftCounts[friends[j]]++;
+            else if(scores[friends[i]] > scores[friends[j]]) giftCounts[friends[i]]++;
+            else if(scores[friends[i]] < scores[friends[j]]) giftCounts[friends[j]]++;
         }
-        
     }
     
-    return Math.max(...result);
+    return Math.max(...Object.values(giftCounts));
 }
