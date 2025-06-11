@@ -1,17 +1,18 @@
 function solution(numbers, target) {
     let count = 0;
-    
-    function dfs(idx,sum){
-        if(idx === numbers.length){
-            if(sum === target) count++;
-            return;
-        }  
+    const stack = [{total: 0 , nextIndex: 0}]
+ 
+    while(stack.length > 0){
+        const {total, nextIndex} = stack.pop();
         
-        dfs(idx+1, sum + numbers[idx]);
-        dfs(idx+1, sum - numbers[idx]);
+        if(nextIndex === numbers.length){
+            if(total === target) count++;
+            continue;
+        }
+        
+        stack.push({total: total+numbers[nextIndex], nextIndex: nextIndex+1})
+        stack.push({total: total-numbers[nextIndex], nextIndex: nextIndex+1})
     }
-    
-    dfs(0,0);
     
     return count;
 }
