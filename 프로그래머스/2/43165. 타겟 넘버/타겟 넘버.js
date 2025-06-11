@@ -1,17 +1,17 @@
 function solution(numbers, target) {
     let count = 0;
     
-    function checkIsTarget(nextIndex,nowNum){
-        if(nextIndex === numbers.length) {
-            if(nowNum === target) count++;
+    function dfs(idx,sum){
+        if(idx === numbers.length){
+            if(sum === target) count++;
             return;
-        }
+        }  
         
-        checkIsTarget(nextIndex + 1, nowNum + numbers[nextIndex]);
-        checkIsTarget(nextIndex + 1, nowNum - numbers[nextIndex]);
+        dfs(idx+1, sum + numbers[idx]);
+        dfs(idx+1, sum - numbers[idx]);
     }
     
-    checkIsTarget(0,0);
+    dfs(0,0);
     
     return count;
 }
