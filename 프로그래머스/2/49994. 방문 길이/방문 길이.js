@@ -1,28 +1,22 @@
-const findEndPosition = (direction,row,col)=>{
-    switch (direction){
-        case "U": return [row+1,col];
-        case "D": return [row-1,col];
-        case "R": return [row,col+1];
-        case "L": return [row,col-1];
-    }
-}
-
-const isValidMove = (position)=>{
-    return position[0] >= 0 && position[0] <= 10 && position[1] >= 0 && position[1] <= 10; 
-}
-
 function solution(dirs) {
+    let current = [0,0];
     const visited = new Set();
-    let now = [5,5];
     
-    for(const direction of dirs){
-        const end = findEndPosition(direction,now[0],now[1]);
-        if(isValidMove(end)){
-            visited.add(`${now} ${end}`);
-            visited.add(`${end} ${now}`);
-            now = end;
-        }
+    for(const dir of dirs){
+        const [dx,dy] = getDxDy(dir);
+        const next = [current[0]+dx,current[1]+dy];
+        if(next[0] < -5 || next[0] > 5 || next[1] < -5 || next[1] > 5) continue;
+        visited.add(`start:[${current[0]},${current[1]}] end:${next[0]},${next[1]}`);
+        visited.add(`start:[${next[0]},${next[1]}] end:${current[0]},${current[1]}`);
+        current = next;
     }
     
     return visited.size/2;
+}
+
+function getDxDy(dir){
+    if(dir === "U") return [0,1];
+    if(dir === "D") return [0,-1];
+    if(dir === "R") return [1,0];
+    return [-1,0];
 }
