@@ -1,25 +1,26 @@
 function solution(board, moves) {
-    let count = 0
     const stack = [];
-    const colStacks = Array.from({length:board[0].length},()=>[]);
-    
-    for(let row=board.length-1; row>=0; row--){
-        for(let col=0; col<board[row].length; col++){
-            if(board[row][col]) colStacks[col].push(board[row][col]);
-        }
-    }
+    let result = 0;
     
     for(const move of moves){
-        if(colStacks[move-1].length === 0) continue;
+        const col = move-1;
         
-        const doll = colStacks[move-1].pop();
-        if(doll === stack.at(-1)){
-            count += 2;
-            stack.pop();
-        }else{
-            stack.push(doll);
+        for(let i=0; i<board.length; i++){
+            if(board[i][col] > 0){
+                const doll = board[i][col];
+    
+                if(stack.at(-1) === doll){
+                    stack.pop();
+                    result += 2;
+                }else{
+                    stack.push(doll);
+                }
+                
+                board[i][col] = 0;
+                break;
+            }
         }
     }
     
-    return count;
+    return result;
 }
