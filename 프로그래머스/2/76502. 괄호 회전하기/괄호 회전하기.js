@@ -1,25 +1,27 @@
 function solution(s) {
-    const pairs = { "{" :"}", "[" : "]", "(" : ")" };
-    let count = 0;
+    const length = s.length;
+    const str2 = s.repeat(2);
+    const pair = {"}":"{","]":"[",")":"("}
+    let result = 0;
     
-    for(let i=0; i<s.length; i++){
+    for(let i=0; i<length; i++){
+        const str = str2.slice(i,i+length);
         const stack = [];
-        const str = (s+s).slice(i,i+s.length);
-        let isValid =true;
+        let isIncorrect = false;
         
-        for(const c of str){
-            if(pairs[c]){
-                stack.push(c);
-            }else if(pairs[stack.at(-1)] === c){
-                stack.pop();
-            }else {
-                isValid =false;
+        for(const char of str){
+            if(pair[char]===undefined){
+                stack.push(char);
+            }else if(pair[char] === stack.at(-1)){
+                stack.pop()
+            }else{
+                isIncorrect = true;
                 break;
             }
         }
         
-        if(isValid && stack.length===0) count++;
+        if(!isIncorrect && stack.length === 0) result++;
     }
     
-    return count;
+    return result;
 }
