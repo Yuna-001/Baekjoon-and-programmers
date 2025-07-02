@@ -1,19 +1,29 @@
 function solution(cards1, cards2, goal) {
-    let idx1 = 0;
-    let idx2 = 0;
-    let goalIdx = 0;
+    let i = 0;
+    let isPossible = true;
     
-    while(goalIdx < goal.length){
-       if(cards1[idx1] === goal[goalIdx]){
-           idx1++;
-           goalIdx++;
-       }else if(cards2[idx2] === goal[goalIdx]){
-           idx2++;
-           goalIdx++;
-       }else{
-           return "No";
-       }
+    while(i<goal.length && isPossible){
+        isPossible = false;
+        while(cards1.length > 0 && i<goal.length){
+            const str = cards1[0];
+            
+            if(goal[i] !== str) break;
+            
+            i++;
+            cards1.shift();
+            isPossible=true;
+        }
+        
+         while(cards2.length > 0 && i<goal.length){
+            const str = cards2[0];
+            
+            if(goal[i] !== str) break;
+            
+            i++;
+            cards2.shift();
+            isPossible=true;
+        }
     }
     
-    return "Yes";
+    return isPossible ? "Yes" : "No"
 }
