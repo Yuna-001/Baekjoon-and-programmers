@@ -1,6 +1,4 @@
 function solution(id_list, report, k) {
-    // 내가 신고한 사람이 정지되었는지
-    // 그게 몇 번인지
     const user = {};
     const reportedUser = {};
     const mail = {};
