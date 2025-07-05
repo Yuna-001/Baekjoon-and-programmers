@@ -1,23 +1,21 @@
 function solution(record) {
-    const nicknameObj = {};
-    const result = [];
-    
-    for(const str of record){
-        const [op, id, nickname] = str.split(" ");
+    const users = {}
+
+    for(const cmd of record){
+        const [op, id, nickname] = cmd.split(" ");
         
         if(op === "Enter" || op === "Change"){
-            nicknameObj[id] = nickname;
+            users[id] = nickname;
         }
     }
     
-    for(const str of record){
-         const [op, id] = str.split(" ");
+    const result = [];
+    
+    for(const cmd of record){
+        const [op, id] = cmd.split(" ");
         
-        if(op === "Enter"){
-            result.push(`${nicknameObj[id]}님이 들어왔습니다.`);
-        }else if (op === "Leave"){
-            result.push(`${nicknameObj[id]}님이 나갔습니다.`);
-        }
+        if(op === "Enter") result.push(`${users[id]}님이 들어왔습니다.`)
+        else if(op === "Leave") result.push(`${users[id]}님이 나갔습니다.`)
     }
     
     return result;
