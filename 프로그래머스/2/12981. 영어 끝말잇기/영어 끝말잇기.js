@@ -1,12 +1,16 @@
 function solution(n, words) {
-    const set = new Set([words[0]]);
+    const used = new Set();
+    used.add(words[0]);
     
     for(let i=1; i<words.length; i++){
-        if(words[i][0] !== words[i-1].at(-1) || set.has(words[i])){
-            return [i%n+1, Math.floor(i/n)+1];
+        const prev = words[i-1];
+        const cur = words[i];
+        
+        if(prev.at(-1) !== cur[0] || used.has(cur)){
+            return [i%n+1, Math.floor(i/n)+1]
         }
         
-        set.add(words[i]);
+        used.add(cur);
     }
     
     return [0,0];
