@@ -1,49 +1,31 @@
-class Queue{
-    constructor(){
-        this.items = [];
-        this.head = 0;
-        this.rear = 0;
-    }
-    
-    push(val){
-        this.items.push(val);
-        this.rear++;
-    }
-    
-    pop(){
-        return this.items[this.head++];
-    }
-    
-    isEmpty(){
-        return this.head === this.rear;
-    }
-}
-
 function solution(maps) {
-    const queue = new Queue();
+    const dir = [[0,1],[1,0],[-1,0],[0,-1]];
     const m = maps.length;
     const n = maps[0].length;
-    const visited = Array.from({length:m}, ()=>[]);
-    const directions = [[0,1],[1,0],[0,-1],[-1,0]];
+    const visited = Array.from({length:m},()=>new Array(n).fill(false))
     
-    queue.push({position: [0,0], distance: 1});
+    const queue = [{pos:[0,0],move:1}];
+    visited[0][0] = true;
     
-    while(!queue.isEmpty()){
-        const {position: [y,x], distance} = queue.pop();
+    while(queue.length){
+        const {pos:[curY,curX], move} = queue.shift();
         
-        if(y === m-1 && x === n-1) return distance;
+        if(curY===maps.length-1 && curX===maps[curY].length-1) return move;
         
-        for(const [dy,dx] of directions){
-            if(isValidPosition(y+dy,x+dx,[m,n],visited,maps)){
-                queue.push({position: [y+dy,x+dx], distance: distance+1});
-                visited[y+dy][x+dx] = true;
+        for(const [dy,dx] of dir){
+            const nextY = curY+dy;
+            const nextX = curX+dx;
+            
+            if(isValid(maps,nextY,nextX,visited)){
+                queue.push({pos:[nextY,nextX],move:move+1});
+                visited[nextY][nextX] = true;
             }
         }
     }
     
     return -1;
 }
-
-function isValidPosition(y,x,limit,visited,maps){
-    return  x >= 0 && y >= 0 && x < limit[1] && y < limit[0] && !visited[y][x] && maps[y][x];
+    
+function isValid(maps,y,x,visited){
+    return y>=0 && x>=0 && y<maps.length && x<maps[y].length && maps[y][x] === 1 && !visited[y][x];
 }
