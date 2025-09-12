@@ -1,5 +1,12 @@
 function solution(numbers) {
-    const answer = numbers.map(n => String(n)).sort((a,b)=>Number(b+a)-Number(a+b)).join("");
+    numbers.sort((a,b)=>{
+        const n1 = a.toString() + b.toString();
+        const n2 = b.toString() + a.toString();
+            
+        return n1 > n2 ? -1 : 1;
+    });
     
-    return Number(answer) === 0 ? "0" : answer;
+    const result = numbers.join("");
+    
+    return result[0] === "0" ? "0" : result;
 }
