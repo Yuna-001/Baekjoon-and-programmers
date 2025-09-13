@@ -1,25 +1,21 @@
 function solution(progresses, speeds) {
-    const counts = [];
-    const days = [];
+    const result = [];
+ 
+    const spendDays = progresses.map((progress,i) => Math.ceil((100-progress)/speeds[i]));
+    let max = spendDays[0];
+    let count = 1;
     
-    for(let i=0; i<progresses.length; i++){
-        days.push(Math.ceil((100-progresses[i])/speeds[i]));
-    }
-    
-    let count = 0;
-    let maxDay = days[0];
-    
-    for(let i=0; i<days.length; i++){
-        if(days[i] <= maxDay){
+    for(let i=1; i<spendDays.length; i++){
+        if(spendDays[i] <= max){
             count++;
         }else{
-            counts.push(count)
-            maxDay = days[i];
+            result.push(count);
+            max = spendDays[i];
             count = 1;
         }
     }
     
-    counts.push(count);
+    result.push(count);
     
-    return counts;
+    return result;
 }
