@@ -1,7 +1,7 @@
 class Node{
-    constructor(idx,x){
-        this.idx = idx;
+    constructor(x,idx){
         this.x = x;
+        this.idx = idx;
         this.left = null;
         this.right = null;
     }
@@ -12,71 +12,64 @@ class Tree{
         this.root = null;
     }
     
-    push(idx,x){
-        const node = new Node(idx,x);
+    push(x,idx){
+        const node = new Node(x,idx);
         
         if(this.root === null){
             this.root = node;
-        }else{
-            let current = this.root;
-            
-            while(true){
-                if(x < current.x){
-                    if(current.left){
-                        current = current.left;
-                    }else {
-                        current.left = node;
-                        break;
-                    }
-                }else{
-                    if(current.right){
-                        current = current.right;
-                    }else {
-                        current.right = node;
-                        break;
-                    }
+            return;
+        }
+        
+        let current = this.root;
+        
+        while(true){
+            if(x<current.x){
+                if(current.left === null){
+                    current.left = node;
+                    break;
                 }
+                current = current.left;
+            }else{
+                if(current.right === null){
+                    current.right = node;
+                    break;
+                }
+                current = current.right;
             }
         }
+        
     }
 }
 
 function solution(nodeinfo) {
     const result = [[],[]];
+    
+    const arr = nodeinfo.map(([x,y],i)=>({x,y,idx:i+1}));
+    
+    arr.sort((a,b)=>b.y-a.y);
+    
     const tree = new Tree();
     
-    const idxArr = nodeinfo.map((_,idx) => idx+1);
-    idxArr.sort((a,b)=> nodeinfo[b-1][1] - nodeinfo[a-1][1] || nodeinfo[a-1][0] - nodeinfo[b-1][0]);
-    
-    idxArr.forEach(idx => {
-        tree.push(idx,nodeinfo[idx-1][0]);
-    })
-    
-    // 전위순회
-    let stack = [tree.root];
-    
-    while(stack.length){
-        const {idx,left,right} = stack.pop();
-        
-        result[0].push(idx);
-        if(right) stack.push(right);
-        if(left) stack.push(left);
+    for(const {x,idx} of arr){
+        tree.push(x,idx);
     }
     
-    // 후위순회
-    stack = [[tree.root,false]];
-    
-    while(stack.length){
-        const [node,visited] = stack.pop();
-        
-        if(visited){
-            result[1].push(node.idx);
-        }else{
-            stack.push([node,true])
-            if(node.right) stack.push([node.right,false]);
-            if(node.left) stack.push([node.left,false]);   
-        }
+    // 전위 순회
+    function preorder(node){
+        result[0].push(node.idx);
+        if(node.left) preorder(node.left);
+        if(node.right) preorder(node.right);
     }
+    
+    // 후위 순회
+    function postorder(node){
+        if(node.left) postorder(node.left);
+        if(node.right) postorder(node.right);
+        result[1].push(node.idx);
+    }
+    
+    preorder(tree.root);
+    postorder(tree.root)
     
     return result;
 }
