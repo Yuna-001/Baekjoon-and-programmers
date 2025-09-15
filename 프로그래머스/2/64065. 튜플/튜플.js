@@ -1,7 +1,13 @@
 function solution(s) {
-    const arr = JSON.parse(s.replaceAll("{","[").replaceAll("}","]"));
+    const sets = s.replaceAll(/{|}}/g,"").split("},").sort((a,b)=>a.length-b.length)
+    const result = new Set();
     
-    arr.sort((a,b)=>a.length-b.length);
+    for(const set of sets){
+        const numbers = set.split(",").map(Number);
+        for(const n of numbers){
+            result.add(n);
+        }
+    }
     
-    return [...new Set(arr.flat())]
+    return [...result]
 }
