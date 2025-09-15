@@ -3,9 +3,9 @@ function solution(s) {
     const result = new Set();
     
     for(const set of sets){
-        const numbers = set.split(",").map(Number);
+        const numbers = set.split(",");
         for(const n of numbers){
-            result.add(n);
+            result.add(+n);
         }
     }
     
