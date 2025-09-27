@@ -1,16 +1,16 @@
 function solution(s) {
-    let countTransform = 0;
-    let countZero = 0;
+    let times = 0;
+    let zeros = 0;
     
     while(s !== "1"){
         const prevLength = s.length;
-        const countOne = s.split("0").join("").length;
+        const length = s.replace(/0/g,"").length;
         
-        countZero += prevLength - countOne;
-        countTransform++;
+        s = length.toString(2);
         
-        s = countOne.toString(2);
+        zeros += prevLength - length;
+        times++;
     }
     
-    return [countTransform, countZero]
+    return [times, zeros];
 }
