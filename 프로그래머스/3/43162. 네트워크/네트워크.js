@@ -13,18 +13,18 @@ function solution(n, computers) {
     const visited = new Array(n).fill(false);
     let network = 0;
     
-    function bfs(com){
+    function dfs(com){
         visited[com] = true;
         
         for(const neighbor of map[com]){
-            if(!visited[neighbor]) bfs(neighbor);
+            if(!visited[neighbor]) dfs(neighbor);
         }
     }
     
     for(let i=0;i<n;i++){
         if(!visited[i]){
             network++;
-            bfs(i);
+            dfs(i);
         }
     }
     
