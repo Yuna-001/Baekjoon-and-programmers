@@ -1,30 +1,30 @@
 function solution(n, computers) {
-    let network = 0;
-    const checked = new Array(n).fill(false);
-    const connection = Array.from({length:n},()=>[]);
+    const map = Array.from({length:n},()=>new Array());
     
     for(let i=0; i<n; i++){
         for(let j=i+1; j<n; j++){
             if(computers[i][j]===1){
-                connection[i].push(j);
-                connection[j].push(i);
+                map[i].push(j);
+                map[j].push(i);
             }
         }
     }
     
-    function check(computer){
-        for(const com of connection[computer]){
-            if(!checked[com]){
-                checked[com] = true;
-                check(com);
-            }
+    const visited = new Array(n).fill(false);
+    let network = 0;
+    
+    function bfs(com){
+        visited[com] = true;
+        
+        for(const neighbor of map[com]){
+            if(!visited[neighbor]) bfs(neighbor);
         }
     }
     
-    for(let i=0; i<n; i++){
-        if(!checked[i]){
-            check(i);
+    for(let i=0;i<n;i++){
+        if(!visited[i]){
             network++;
+            bfs(i);
         }
     }
     
