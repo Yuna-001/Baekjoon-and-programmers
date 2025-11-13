@@ -1,29 +1,35 @@
 function solution(N, road, K) {
-    const connections = Array.from({length:N+1},()=>[]);
+    // 다익스트라 알고리즘
     
-    road.forEach(([v1,v2,weight])=>{
-        connections[v1].push([v2,weight]);
-        connections[v2].push([v1,weight]);
-    })
+    const maps = Array.from({length: N},()=> new Map());
     
-    const distances = Array.from({length:N+1},()=>Infinity);
-    distances[1] = 0;
+    for(const [v1,v2,t] of road){
+        const minTime = Math.min(t, maps[v1-1].get(v2-1) || Infinity);
+        
+        maps[v1-1].set(v2-1, minTime);
+        maps[v2-1].set(v1-1, minTime);
+    }
+    
+    const distances = new Array(N).fill(Infinity);
+    const visited = new Array(N).fill(false);
+    
+    distances[0] = 0;
     
     const queue = [];
-    queue.push([1,0]);
+    queue.push({town:0, distance:0})
     
     while(queue.length){
-        const [curTown, curDistance] = queue.shift();
+        const {town, distance} = queue.shift();
+        visited[town] = true;
         
-        if(distances[curTown] < curDistance) continue;
-        
-        for(const [neighbor, distance] of connections[curTown]){
-            const newDistance = distance + curDistance;
-            if(newDistance < distances[neighbor] && newDistance <= K){
-                distances[neighbor] = newDistance;
-                queue.push([neighbor,newDistance]);
+        for(const [t,d] of maps[town]){
+            if(!visited[t] && distances[t] > d + distance){
+                distances[t] = d + distance;
+                queue.push({town:t, distance:distances[t]});
             }
         }
+        
+        queue.sort((a,b)=>a.distance-b.distance);
     }
     
     return distances.filter(distance => distance <= K).length;
