@@ -1,12 +1,12 @@
 function solution(numbers) {
-    numbers.sort((a,b)=>{
-        const n1 = a.toString() + b.toString();
-        const n2 = b.toString() + a.toString();
-            
-        return n1 > n2 ? -1 : 1;
+    numbers.sort((a,b)=>{    
+        const strA = String(a);
+        const strB = String(b);
+        
+       return (strB+strA) - (strA+strB);
     });
     
     const result = numbers.join("");
     
-    return result[0] === "0" ? "0" : result;
+    return Number(result) === 0 ? "0" : result;
 }
