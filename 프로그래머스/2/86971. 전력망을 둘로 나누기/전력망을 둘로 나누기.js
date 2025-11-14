@@ -1,6 +1,5 @@
 function solution(n, wires) {
     const tree = Array.from({length:n+1},()=>[]);
-    const visited = new Array(n+1);
     
     for(const [v1,v2] of wires){
         tree[v1].push(v2);
@@ -9,14 +8,12 @@ function solution(n, wires) {
     
     let minGap = n;
     
-    function dfs(v){
+    function dfs(v,prev){
         let count = 1;
         
-        visited[v] = true;
-        
         for(const neighbor of tree[v]){
-            if(!visited[neighbor]){
-                count += dfs(neighbor);
+            if(neighbor !== prev){
+                count += dfs(neighbor,v);
             }
         }
         
