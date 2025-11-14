@@ -1,30 +1,31 @@
-function solution(n, wires){
-    const graph = Array.from({length: n+1}, ()=>[]);
-    let answer = n;
+function solution(n, wires) {
+    const tree = Array.from({length:n+1},()=>[]);
+    const visited = new Array(n+1);
     
-    wires.forEach(([v1,v2])=>{
-        graph[v1].push(v2);
-        graph[v2].push(v1);
-    })
+    for(const [v1,v2] of wires){
+        tree[v1].push(v2);
+        tree[v2].push(v1);
+    }
     
-    const visited = [];
+    let minGap = n;
     
-    function dfs(node){
+    function dfs(v){
         let count = 1;
         
-        for(const neighbor of graph[node]){
+        visited[v] = true;
+        
+        for(const neighbor of tree[v]){
             if(!visited[neighbor]){
-                visited[neighbor] = true;
                 count += dfs(neighbor);
             }
         }
         
-        answer = Math.min(answer, Math.abs(n-2*count));
+        minGap = Math.min(minGap, Math.abs(n-2*count));
+        
         return count;
     }
     
-    visited[1] = true;
     dfs(1);
     
-    return answer;
+    return minGap;
 }
