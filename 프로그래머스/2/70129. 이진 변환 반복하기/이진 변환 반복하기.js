@@ -1,16 +1,16 @@
 function solution(s) {
-    let times = 0;
-    let zeros = 0;
-    
+    let zero = 0;
+    let count = 0;
+  
     while(s !== "1"){
         const prevLength = s.length;
-        const length = s.replace(/0/g,"").length;
+        const length = s.replaceAll("0","").length;
+      
+        zero += prevLength - length;
+        count++;
         
-        s = length.toString(2);
-        
-        zeros += prevLength - length;
-        times++;
+        s=length.toString(2);
     }
     
-    return [times, zeros];
+    return [count, zero];
 }
