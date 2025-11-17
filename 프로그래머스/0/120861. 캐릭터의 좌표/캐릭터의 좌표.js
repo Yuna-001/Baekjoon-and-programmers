@@ -1,23 +1,20 @@
 function solution(keyinput, board) {
-    let x = 0;
-    let y = 0;
-    const maxX = Math.floor(board[0] / 2);
-    const maxY = Math.floor(board[1] / 2);
-    
-    const move = { up : [0,1], down : [0,-1], left: [-1,0], right: [1,0] };
-    
-    for(const key of keyinput){
-        const [dx, dy] = move[key];
-        
-        if(isValid(x+dx, y+dy, maxX, maxY)){
-            x = x+dx;
-            y = y+dy;
-        }
+    const xLimit = (board[0]-1)/2;
+    const yLimit = (board[1]-1)/2;
+    const current = [0,0];
+    const direction = {
+        "left":[-1,0],"right":[1,0],"up":[0,1],"down":[0,-1]
     }
     
-    return [x,y];
-}
-
-function isValid(x,y,maxX,maxY){
-    return x >= (maxX * -1) && x <= maxX && y >= (maxY * -1) && y <= maxY;
+    for(const str of keyinput){
+        const nextY = current[1]+direction[str][1];
+        const nextX = current[0]+direction[str][0];
+        
+        if(nextX < -xLimit || nextY < -yLimit || nextX > xLimit || nextY > yLimit) continue;
+        
+        current[0]=nextX;
+        current[1]=nextY;
+    }
+    
+    return current;
 }
