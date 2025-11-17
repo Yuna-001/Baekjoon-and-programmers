@@ -2,12 +2,13 @@ function solution(brown, yellow) {
     // brown = (가로+세로)*2-4
     // brown + yello = 가로*세로
     
-    const total = brown+yellow;
+    const sum = brown+yellow;
+    const limit = Math.floor(Math.sqrt(sum));
     
-    for(let row=3; row<total; row++){
-        if(total%row !==0) continue;
+    for(let h=3; h<=limit; h++){
+        if(sum%h !==0) continue;
         
-        const col = total/row;
-        if((row+col)===(brown+4)/2) return [col,row];
+        const w = sum/h;
+        if((h+w)===(brown+4)/2) return [w,h];
     }
 }
