@@ -1,20 +1,19 @@
 function solution(k, tangerine) {
-    const counts = new Map();
+    const countMap = new Map();
     
-    tangerine.forEach(size => {
-        counts.set(size, (counts.get(size) || 0) + 1);
-    })
-    
-    const sizes = [...new Set(tangerine)]
-    sizes.sort((a,b)=>counts.get(b)-counts.get(a));
-    
-    let result = 0;
-    
-    for(const size of sizes){
-        k -= counts.get(size);
-        result++;
-        if(k <= 0) break;
+    for(const item of tangerine){
+        countMap.set(item, (countMap.get(item) || 0) + 1);
     }
     
-    return result;
+    tangerine
+        .sort((a,b)=>a-b)
+        .sort((a,b)=>countMap.get(b)-countMap.get(a))
+    
+    const box = new Set();
+    
+    for(let i=0; i<k; i++){
+        box.add(tangerine[i]);
+    }
+    
+    return box.size;
 }
