@@ -1,13 +1,16 @@
 function solution(d, budget) {
+    let count = 0;
+    let remainingBudget = budget;
+    
     d.sort((a,b)=>a-b);
     
-    let count = 0;
-    
     for(let i=0; i<d.length; i++){
-        if(budget < d[i]) break;
-        
-        budget -= d[i];
-        count++;
+        if(remainingBudget >= d[i]){
+            count++;
+            remainingBudget -= d[i];
+        }else{
+            break;
+        }
     }
     
     return count;
