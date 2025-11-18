@@ -9,11 +9,5 @@ function solution(k, tangerine) {
         .sort((a,b)=>a-b)
         .sort((a,b)=>countMap.get(b)-countMap.get(a))
     
-    const box = new Set();
-    
-    for(let i=0; i<k; i++){
-        box.add(tangerine[i]);
-    }
-    
-    return box.size;
+    return new Set(tangerine.slice(0,k)).size;
 }
